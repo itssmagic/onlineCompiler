@@ -4,6 +4,7 @@ const { generateFile } = require("./generateFile");
 const { executeCpp } = require("./excecuteCpp");
 const { executePy } = require("./executePy");
 const { executeJava } = require("./executeJava");
+const { generateInputFile } = require("./generateInputFile");
 const app = express();
 
 //middlware
@@ -15,28 +16,28 @@ app.get("/", (req, res) => {
 });
 
 app.post("/run", async (req, res) => {
-  const { language = "cpp", code } = req.body;
+  const { language = "cpp",input, code } = req.body;
   if (code === undefined) {
     res.status(500).json({ success: "false", message: "Empty code body" });
   }
 
   try {
     const filePath = await generateFile(language, code);
-    
+    const inputPath = await generateInputFile(input);
     if(language == "py")
     {
-      const output = await executePy(filePath);
-      res.send({ filePath, output });
+      const output = await executePy(filePath, inputPath);
+      res.send({ filePath,inputPath, output });
     }
     else if(language == "cpp")
     {
-      const output = await executeCpp(filePath);
-      res.send({ filePath, output });
+      const output = await executeCpp(filePath, inputPath);
+      res.send({ filePath,inputPath, output });
     }
     else if(language == "java")
     {
-      const output = await executeJava(filePath);
-      res.send({ filePath, output });
+      const output = await executeJava(filePath, inputPath);
+      res.send({ filePath,inputPath, output });
     }
     
     // const output = await executeCpp(filePath);
