@@ -20,9 +20,11 @@ app.post("/run", async (req, res) => {
   if (code === undefined) {
     res.status(500).json({ success: "false", message: "Empty code body" });
   }
-
+  console.log("here");
   try {
     const filePath = await generateFile(language, code);
+
+    //for loop
     const inputPath = await generateInputFile(input);
     if(language == "py")
     {
@@ -32,7 +34,7 @@ app.post("/run", async (req, res) => {
     else if(language == "cpp")
     {
       const output = await executeCpp(filePath, inputPath);
-      res.send({ filePath,inputPath, output });
+      res.send({  output });
     }
     else if(language == "java")
     {
@@ -43,6 +45,7 @@ app.post("/run", async (req, res) => {
     // const output = await executeCpp(filePath);
    
   } catch (error) {
+    console.log("error");
     res.status(500).json({ error: error });
   }
 });
