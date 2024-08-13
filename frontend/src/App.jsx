@@ -32,8 +32,8 @@ function App() {
     };
 
     try {
-      const { data } = await axios.post('http://localhost:5000/run', payload);
-      console.log(data);
+      const base_url=import.meta.env.VITE_BASE_URL;
+      const { data } = await axios.post(`${base_url}/run`, payload);
       setOutput(data.output);
     } catch (error) {
       console.log(error.response);
