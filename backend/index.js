@@ -8,17 +8,19 @@ const { generateInputFile } = require("./generateInputFile");
 const app = express();
 
 //middlware
+//  app.use(cors({origin:["http://localhost:5173","https://oj-backend.codingmindset.tech","http://localhost:5000"]}));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
-  res.send("Welcome to CodeZen Compiler");
+  // https://compiler-backend.codingmindset.tech
+  return res.send("Welcome to CodeZen Compiler");
 });
 
 app.post("/run", async (req, res) => {
-  const { language = "cpp",input, code } = req.body;
+  const { language = "cpp",input, code } = req?.body;
   if (code === undefined) {
-    res.status(500).json({ success: "false", message: "Empty code body" });
+    return res.status(500).json({ success: "false", message: "Empty code body" });
   }
   
   try {
@@ -29,24 +31,24 @@ app.post("/run", async (req, res) => {
     if(language == "py")
     {
       const output = await executePy(filePath, inputPath);
-      res.send({ filePath,inputPath, output });
+      return res.send({ filePath,inputPath, output });
     }
     else if(language == "cpp")
     {
       const output = await executeCpp(filePath, inputPath);
-      res.send({  output });
+      return res.send({  output });
     }
     else if(language == "java")
     {
       const output = await executeJava(filePath, inputPath);
-      res.send({ filePath,inputPath, output });
+      return res.send({ filePath,inputPath, output });
     }
     
     // const output = await executeCpp(filePath);
    
   } catch (error) {
-    console.log("error");
-    res.status(500).json({ error: error });
+    console.log("error",error);
+    return res.status(500).json({ error: error });
   }
 });
 
