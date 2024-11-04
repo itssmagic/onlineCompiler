@@ -15,9 +15,15 @@ const executeCpp = (filepath, inputPath) => {
     return new Promise((resolve, reject) => {
         exec(
             `g++ "${filepath}" -o "${outPath}" && cd "${outputPath}" && ./"${jobId}.out" < "${inputPath}"`,
+            { timeout: 1000, maxBuffer: 1024 * 1024 * 256 },  // Set timeout to 2 seconds
             (error, stdout, stderr) => {
                 if (error) {
-                    reject({ error, stderr });
+                    // Check if the error is due to a timeout
+                    if (error.signal === 'SIGTERM') {
+                        reject("Execution timed out");
+                    } else {
+                        reject({ error, stderr });
+                    }
                     return;
                 }
                 if (stderr) {
