@@ -14,7 +14,7 @@ app.use(cors({origin:["https://online-compiler-frotend-git-main-itssmagics-proje
   "https://online-compiler-frotend-jkl2229dm-itssmagics-projects.vercel.app/",
   "http://localhost:5173/"
 ]}));
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
