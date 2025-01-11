@@ -7,6 +7,7 @@ const { executeJava } = require("./executeJava");
 const { generateInputFile } = require("./generateInputFile");
 const app = express();
 
+
 //middlware
 //  app.use(cors({origin:["http://localhost:5173","https://oj-backend.codingmindset.tech","http://localhost:5000"]}));
 app.use(cors());
