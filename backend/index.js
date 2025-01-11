@@ -9,23 +9,22 @@ const app = express();
 
 
 //middlware
-app.use(
-  cors({
-    origin: [
-      "https://online-compiler-frotend-git-main-itssmagics-projects.vercel.app",
-      "https://online-compiler-frotend.vercel.app",
-      "https://online-compiler-frotend-jkl2229dm-itssmagics-projects.vercel.app",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "OPTIONS"],  // Allow OPTIONS method
-    credentials: true,  // Allow credentials if needed (cookies, authorization headers)
-    preflightContinue: false,  // Send the response directly to the client instead of passing it to the next middleware
-  })
-);
+const corsOptions = {
+  origin: [
+    "https://online-compiler-frotend-git-main-itssmagics-projects.vercel.app",
+    "https://online-compiler-frotend.vercel.app",
+    "https://online-compiler-frotend-jkl2229dm-itssmagics-projects.vercel.app",
+    "http://localhost:5173", // Localhost for local testing
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // If using cookies or other credentials
+  preflightContinue: false, // Don't pass preflight requests to the next middleware
+};
 
-app.options("*", (req, res) => {
-  res.sendStatus(200);  // Send 200 OK for OPTIONS requests
-});
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions)); 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
