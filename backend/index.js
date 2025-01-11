@@ -9,7 +9,7 @@ const app = express();
 
 
 //middlware
-//  app.use(cors({origin:["http://localhost:5173","https://oj-backend.codingmindset.tech","http://localhost:5000"]}));
+  app.use(cors({origin:["https://online-compiler-frotend-h189m052w-itssmagics-projects.vercel.app/"]}));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
