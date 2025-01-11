@@ -13,7 +13,7 @@ const corsOptions = {
   origin: [
     "https://online-compiler-frotend-git-main-itssmagics-projects.vercel.app",
     "https://online-compiler-frotend.vercel.app",
-    "https://online-compiler-frontend-l8xlqluc6-itssmagics-projects.vercel.app",
+    "https://online-compiler-frontend-a90lr6efz-itssmagics-projects.vercel.app",
     "http://localhost:5173", // Localhost for local testing
   ],
   methods: ["GET", "POST", "OPTIONS"],
